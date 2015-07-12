@@ -11,3 +11,54 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
 fi
 
 # Customize to your needs...
+export PATH=$PATH:"/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin:/usr/local/bin/g4bin"
+export PATH=$PATH:$HOME/bin
+
+# System variables
+export SUBLIME=subl
+export VISUAL=$EDITOR
+LS_COLORS=$LS_COLORS:'di=0;35:' ; export LS_COLORS
+######################
+### START OF ALIAS ###
+######################
+# Push and pop directories on directory stack
+alias pu='pushd'
+alias po='popd'
+
+# Basic directory operations
+alias ...='cd ../..'
+alias -- -='cd -'
+
+# Super user
+alias _='sudo'
+alias please='sudo'
+
+#alias g='grep -in'
+
+# Show history
+if [ "$HIST_STAMPS" = "mm/dd/yyyy" ]
+then
+    alias history='fc -fl 1'
+elif [ "$HIST_STAMPS" = "dd.mm.yyyy" ]
+then
+    alias history='fc -El 1'
+elif [ "$HIST_STAMPS" = "yyyy-mm-dd" ]
+then
+    alias history='fc -il 1'
+else
+    alias history='fc -l 1'
+fi
+
+# List direcory contents
+alias lsa='ls -lah'
+alias l='ls -lah'
+alias ll='ls -lh'
+alias la='ls -lAh'
+
+# Git
+alias g='git'
+
+# Others
+alias afind='ack-grep -il'
+alias df='df -H'
+####### END OF ALIAS ######
