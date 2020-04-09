@@ -86,4 +86,13 @@ alias h='history | grep -i'
 
 # Set clobber to overwrite files
 setopt clobber
+# no globbing
+setopt NO_NOMATCH
 
+# LLVM, namely 'clangd'
+export PATH="/usr/local/opt/llvm/bin:$PATH"
+
+# virtualenvwrapper
+export WORKON_HOME=~/Envs
+export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python3
+source /usr/local/bin/virtualenvwrapper.sh
