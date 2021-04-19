@@ -94,7 +94,46 @@ setopt NO_NOMATCH
 # LLVM, namely 'clangd'
 export PATH="/usr/local/opt/llvm/bin:$PATH"
 
-# virtualenvwrapper 
-# export WORKON_HOME=~/Envs
-# export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python3
-# source /usr/local/bin/virtualenvwrapper.sh
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh" || true
+
+# ######################
+# Below are KS configs #
+# ######################
+# KS commands
+alias k4d="cd ~/ks"
+alias g4d='cd /data/gitlab/cyf_git_ad/teams/ad'
+alias g5d='cd /data/gitlab/backup_git_ad/teams/ad'
+
+# Run kbuild in the current /teams/ad directory without ...
+function gbuild {
+    TARGET_OPT="struct_check_opt,opt"
+    while getopts "od" OPTION
+    do
+        case $OPTION in
+            o)
+                TARGET_OPT="opt"
+                ;;
+            d)
+                TARGET_OPT="diag_opt,opt"
+                ;;
+            \?)
+                echo "Used for the help menu"
+                exit
+                ;;
+        esac
+    done
+    BUILD_FILES=("${@/#/teams/ad/}")
+    if [ $OPTIND -eq 1 ]; then
+        PREFIXED_BUILD_FILES=("${BUILD_FILES[@]}")
+    else
+        PREFIXED_BUILD_FILES=("${BUILD_FILES[@]:1}")
+    fi
+    echo "building $PREFIXED_BUILD_FILES"
+
+    if [[ $PWD == *\/teams\/ad ]]; then 
+        (cd ../../ && echo "executing in root dir..." && kbuild build $PREFIXED_BUILD_FILES --targets=$TARGET_OPT)
+    else
+        (kbuild build "$@" --targets=$TARGET_OPT)
+    fi
+}
+
